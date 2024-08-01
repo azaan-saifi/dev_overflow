@@ -31,7 +31,7 @@ const Navbar = () => {
           <UserButton
             appearance={{
               elements: {
-                avatarBox: "h-10 w-10",
+                avatarBox: "h-8 w-8",
               },
               variables: {
                 colorPrimary: "#ff7000",
