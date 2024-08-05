@@ -46,7 +46,7 @@ export async function updateUser(params: UpdateUserParams) {
     await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
     revalidatePath(path);
   } catch (error) {
-    console.log("Error while creating the user:", error);
+    console.log("Error while updating the user:", error);
     throw error;
   }
 }
@@ -75,7 +75,7 @@ export async function deleteUser(params: DeleteUserParams) {
 
     return user;
   } catch (error) {
-    console.log("Error while creating the user:", error);
+    console.log("Error while deleting the user:", error);
     throw error;
   }
 }
