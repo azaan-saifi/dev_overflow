@@ -22,6 +22,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 const type: any = "create";
 
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const Question = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -123,8 +125,8 @@ const Question = ({ mongoUserId }: Props) => {
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Be specific and imagine you&apose;re asking a question to
-                another person.
+                Be specific and imagine you&apos;re asking a question to another
+                person.
               </FormDescription>
               <FormMessage className=" text-red-500" />
             </FormItem>
@@ -174,6 +176,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "codesample bold italic forecolor | alignleft aligncenter " +
                       "alignright alignjustify | bullist numlist",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
