@@ -1,21 +1,19 @@
 import QuestionCard from "@/components/card/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
-import Filter from "@/components/shared/search/Filter";
 import { LocalSearchbar } from "@/components/shared/search/LocalSearchbar";
-import { QuestionFilters } from "@/constants/filter";
-import { getSavedQuestions } from "@/lib/actions/user.action";
-import { auth } from "@clerk/nextjs/server";
+import { getQuestionsByTagId } from "@/lib/actions/tag.action";
+import { URLProps } from "@/types";
 import React from "react";
 
-const Collection = async () => {
-  const { userId } = auth();
-  if (!userId) return null;
-
-  const result = await getSavedQuestions({ clerkId: userId });
+const TagDetails = async ({ params, searchParams }: URLProps) => {
+  const result = await getQuestionsByTagId({
+    tagId: params.id,
+    searchQuery: searchParams.query,
+  });
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
+      <h1 className="h1-bold text-dark100_light900">{result.tagTitle}</h1>
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
@@ -24,11 +22,6 @@ const Collection = async () => {
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
           otherClasses="flex-1"
-        />
-        <Filter
-          filters={QuestionFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px]"
-          containerClasses="hidden max-md:flex"
         />
       </div>
 
@@ -49,7 +42,7 @@ const Collection = async () => {
           ))
         ) : (
           <NoResult
-            title="There's no question saved to show"
+            title="There's no tag to show"
             description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
         discussion. Your query could be the next big thing others learn from.
         Get involved! 💡"
@@ -62,4 +55,4 @@ const Collection = async () => {
   );
 };
 
-export default Collection;
+export default TagDetails;
