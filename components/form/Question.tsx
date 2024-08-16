@@ -38,15 +38,16 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const parsedQuestionDetails = JSON.parse(questionDetails || "");
-  const editTags = parsedQuestionDetails.tags.map((tag: any) => tag.name);
+  const parsedQuestionDetails =
+    questionDetails && JSON.parse(questionDetails || "");
+  const editTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: parsedQuestionDetails.title,
-      explanation: parsedQuestionDetails.content,
+      title: parsedQuestionDetails?.title,
+      explanation: parsedQuestionDetails?.content,
       tags: editTags,
     },
   });
@@ -161,7 +162,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                   }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={parsedQuestionDetails.content || ""}
+                  initialValue={parsedQuestionDetails?.content || ""}
                   init={{
                     height: 350,
                     menubar: true,
@@ -216,7 +217,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                     disabled={type === "edit"}
                   />
-                  {field.value.length > 0 && (
+                  {field.value?.length > 0 && (
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
                         <Badge
