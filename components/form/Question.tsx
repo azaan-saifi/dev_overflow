@@ -100,8 +100,8 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
             message: "Tag must be less than 15 characters.",
           });
         }
-        if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
+        if (!field.value?.includes(tagValue as never)) {
+          form.setValue("tags", [...(field.value || []), tagValue]);
           tagInput.value = "";
           form.clearErrors("tags");
         }

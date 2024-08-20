@@ -14,6 +14,7 @@ interface QuestionCardProps {
     name: string;
   }[];
   author: {
+    clerkId: string;
     _id: string;
     name: string;
     picture: string;
@@ -22,7 +23,7 @@ interface QuestionCardProps {
   views: number;
   upvotes: string[];
   createdAt: Date;
-  clerkId?: string;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({

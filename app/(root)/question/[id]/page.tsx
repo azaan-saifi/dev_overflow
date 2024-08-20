@@ -7,18 +7,13 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatNumber, getTimeStamps } from "@/lib/utils";
+import { URLProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
-const QuestionId = async ({ params }: Props) => {
+const QuestionId = async ({ params, searchParams }: URLProps) => {
   const { id } = params;
   const question = await getQuestionById({ questionId: id });
 
@@ -102,6 +97,8 @@ const QuestionId = async ({ params }: Props) => {
         questionId={question._id}
         userId={mongoUser._id}
         totalAnswers={question.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
       />
 
       <Answer

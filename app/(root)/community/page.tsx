@@ -1,13 +1,19 @@
 import CommunityCard from "@/components/card/CommunityCard";
+import Pagination from "@/components/shared/Pagination";
 import Filter from "@/components/shared/search/Filter";
 import { LocalSearchbar } from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filter";
 import { getAllUsers } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import React from "react";
 
-const Community = async () => {
-  const result = await getAllUsers({});
+const Community = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllUsers({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
 
   return (
     <div className="flex flex-col gap-5">
@@ -38,14 +44,20 @@ const Community = async () => {
             />
           ))
         ) : (
-          <div>
-            <p>No users yet</p>
+          <div className="flex w-full flex-col items-center justify-center">
+            <p className="paragraph-regular text-dark200_light800">
+              No users yet
+            </p>
             <Link href={"/sign-up"} className="mt-2 font-bold text-accent-blue">
-              Join to be the first!
+              Join to be the first 🚀
             </Link>
           </div>
         )}
       </section>
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
     </div>
   );
 };
