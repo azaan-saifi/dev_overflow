@@ -5,8 +5,13 @@ import { LocalSearchbar } from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filter";
 import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Home | DevOverflow",
+};
 
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({

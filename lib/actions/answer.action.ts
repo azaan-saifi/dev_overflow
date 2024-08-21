@@ -11,6 +11,7 @@ import {
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import Interaction from "@/database/interaction.model";
+import User from "@/database/user.model";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -25,11 +26,23 @@ export async function createAnswer(params: CreateAnswerParams) {
     });
 
     // Adding answer under the question collection
-    await Question.findByIdAndUpdate(question, {
+    const questionObj = await Question.findByIdAndUpdate(question, {
       $push: { answers: answer._id },
     });
 
     // TODO: interaction...
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: answer._id,
+      tags: questionObj.tags,
+    });
+
+    // point increment
+    await User.findByIdAndUpdate(author, {
+      $inc: { reputation: 10 },
+    });
 
     revalidatePath(path);
     return answer;
@@ -108,11 +121,20 @@ export async function upvoteAnswers(params: AnswerVoteParams) {
 
     const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
       new: true,
-    }).lean();
+    });
 
     if (!answer) {
       throw new Error("Asnwer not found");
     }
+
+    // Increment author's reputation
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (error) {
@@ -145,11 +167,20 @@ export async function downvoteAnswers(params: AnswerVoteParams) {
 
     const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
       new: true,
-    }).lean();
+    });
 
     if (!answer) {
       throw new Error("Asnwer not found");
     }
+
+    // Increment author's reputation
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -2 : 2 },
+    });
+
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (error) {

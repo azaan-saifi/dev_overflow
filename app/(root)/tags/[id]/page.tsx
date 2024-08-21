@@ -6,6 +6,18 @@ import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import { URLProps } from "@/types";
 import React from "react";
 
+import type { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const tags = await getQuestionsByTagId({ tagId: params.id });
+  return {
+    title: `${tags.tagTitle.charAt(0).toUpperCase() + tags.tagTitle.slice(1)} | DevOverflow`,
+  };
+}
+
 const TagDetails = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
     tagId: params.id,
