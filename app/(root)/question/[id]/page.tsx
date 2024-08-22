@@ -95,7 +95,7 @@ const QuestionId = async ({ params, searchParams }: URLProps) => {
 
       <AllAnswers
         questionId={question._id}
-        userId={mongoUser._id}
+        userId={mongoUser?._id}
         totalAnswers={question.answers.length}
         page={searchParams?.page}
         filter={searchParams?.filter}
@@ -104,7 +104,7 @@ const QuestionId = async ({ params, searchParams }: URLProps) => {
       <Answer
         questionId={JSON.stringify(question._id)}
         question={question.content}
-        authorId={JSON.stringify(mongoUser._id)}
+        authorId={JSON.stringify(mongoUser?._id)}
       />
     </>
   );
