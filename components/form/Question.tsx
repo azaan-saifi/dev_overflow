@@ -25,9 +25,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
 
 interface Props {
-  type: string;
+  type?: string;
   mongoUserId: string;
-  questionDetails: string;
+  questionDetails?: string;
 }
 
 const Question = ({ type, mongoUserId, questionDetails }: Props) => {
