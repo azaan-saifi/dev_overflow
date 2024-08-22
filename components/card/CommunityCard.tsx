@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import RenderTag from "../shared/RenderTag";
-import { getTopInteractedTags } from "@/lib/actions/tag.action";
+import { getPopularTags } from "@/lib/actions/tag.action";
 import { Badge } from "../ui/badge";
 
 interface Props {
@@ -20,7 +20,7 @@ const CommunityCard = async ({
   username,
   picture,
 }: Props) => {
-  const interactedTags = await getTopInteractedTags({ userId: id });
+  const popularTags = await getPopularTags({ limit: 3 });
 
   return (
     <div>
@@ -44,9 +44,9 @@ const CommunityCard = async ({
           </div>
 
           <div className="mt-5">
-            {interactedTags.length > 0 ? (
+            {popularTags.length > 0 ? (
               <div className="flex items-center gap-2">
-                {interactedTags?.map((tag) => (
+                {popularTags?.map((tag) => (
                   <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
                 ))}
               </div>

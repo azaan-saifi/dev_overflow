@@ -75,7 +75,7 @@ const QuestionCard = ({
           alt="user"
           value={author.name}
           title={` - asked ${getTimeStamps(createdAt)}`}
-          href={`/profile/${author._id}`}
+          href={`/profile/${author.clerkId}`}
           textStyles="small-medium text-dark400_light800"
         />
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">

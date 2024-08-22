@@ -12,9 +12,11 @@ import ProfileLink from "@/components/shared/ProfileLink";
 import Stats from "@/components/shared/Stats";
 import QuestionTab from "@/components/shared/QuestionTab";
 import AnswersTab from "@/components/shared/AnswersTab";
+import NoResult from "@/components/shared/NoResult";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
+  if (!clerkId) return null;
   const userInfo = await getUserInfo({ userId: params.id });
 
   return (
@@ -93,18 +95,33 @@ const Page = async ({ params, searchParams }: URLProps) => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts">
-            <QuestionTab
-              searchParams={searchParams}
-              userId={userInfo.user._id}
-              clerkId={clerkId}
-            />
+            {userInfo.totalQuestions > 0 ? (
+              <QuestionTab
+                searchParams={searchParams}
+                userId={userInfo.user._id}
+                clerkId={clerkId}
+              />
+            ) : (
+              <NoResult
+                title="There's no question to show"
+                description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+        discussion. Your query could be the next big thing others learn from.
+        Get involved! 💡"
+                link="/ask-question"
+                linkTitle="Ask a Question"
+              />
+            )}
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            <AnswersTab
-              searchParams={searchParams}
-              userId={userInfo.user._id}
-              clerkId={clerkId}
-            />
+            {userInfo.totalAnswers > 0 ? (
+              <AnswersTab
+                searchParams={searchParams}
+                userId={userInfo.user._id}
+                clerkId={clerkId}
+              />
+            ) : (
+              <NoResult title="There's no answer to show" />
+            )}
           </TabsContent>
         </Tabs>
       </div>

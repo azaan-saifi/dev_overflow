@@ -123,14 +123,14 @@ export async function getAllTags(params: GetAllTagsParams) {
   }
 }
 
-export async function getPopularTags() {
+export async function getPopularTags({ limit }: { limit: number }) {
   try {
     connectToDatabase();
 
     const popularTags = await Tag.aggregate([
       { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
       { $sort: { numberOfQuestions: -1 } },
-      { $limit: 5 },
+      { $limit: limit },
     ]);
 
     return popularTags;

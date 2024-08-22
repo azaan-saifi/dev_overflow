@@ -7,7 +7,7 @@ import { getPopularTags } from "@/lib/actions/tag.action";
 
 const RightSidebar = async () => {
   const hotQuestions = await getHotQuestions();
-  const popularTags = await getPopularTags();
+  const popularTags = await getPopularTags({ limit: 5 });
 
   return (
     <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-l p-6 pt-[132px] shadow-light-300 dark:shadow-none max-xl:hidden">
