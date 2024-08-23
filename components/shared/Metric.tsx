@@ -5,31 +5,41 @@ import React from "react";
 interface MetricProps {
   imgUrl: string;
   alt: string;
+  height: number;
+  width: number;
+  iconPosition: string;
   value: string | number;
   title: string;
   href?: string;
   textStyles?: string;
   isAuthor?: boolean;
+  containerGap?: string;
 }
 
 const Metric = ({
   imgUrl,
   alt,
+  height,
+  width,
+  iconPosition,
   value,
   title,
   href,
   textStyles,
   isAuthor,
+  containerGap,
 }: MetricProps) => {
   const metricContent = (
     <>
-      <Image
-        src={imgUrl}
-        width={16}
-        height={16}
-        alt={alt}
-        className={`object-contain ${href ? "rounded-full" : ""}`}
-      />
+      {iconPosition === "left" && (
+        <Image
+          src={imgUrl}
+          width={height}
+          height={width}
+          alt={alt}
+          className={`object-contain ${href ? "rounded-full" : ""}`}
+        />
+      )}
 
       <p className={`${textStyles} flex items-center gap-1`}>
         {value}
@@ -40,6 +50,16 @@ const Metric = ({
           {title}
         </span>
       </p>
+
+      {iconPosition === "right" && (
+        <Image
+          src={imgUrl}
+          width={height}
+          height={width}
+          alt={alt}
+          className={`object-contain ${href ? "rounded-full" : ""}`}
+        />
+      )}
     </>
   );
 
@@ -51,7 +71,11 @@ const Metric = ({
     );
   }
 
-  return <div className="flex-center flex-wrap gap-1">{metricContent}</div>;
+  return (
+    <div className={`flex-center flex-wrap ${containerGap}`}>
+      {metricContent}
+    </div>
+  );
 };
 
 export default Metric;

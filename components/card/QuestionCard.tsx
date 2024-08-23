@@ -73,32 +73,47 @@ const QuestionCard = ({
         <Metric
           imgUrl={author.picture}
           alt="user"
+          width={16}
+          height={16}
+          iconPosition="left"
           value={author.name}
           title={` - asked ${getTimeStamps(createdAt)}`}
           href={`/profile/${author.clerkId}`}
-          textStyles="small-medium text-dark400_light800"
+          textStyles="small-medium text-dark400_light800 gap-1"
         />
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
+            width={16}
+            height={16}
+            iconPosition="left"
             value={formatNumber(upvotes.length)}
             title="Votes"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800 gap-1"
+            containerGap="gap-1"
           />
           <Metric
             imgUrl="/assets/icons/message.svg"
             alt="message"
+            width={16}
+            height={16}
+            iconPosition="left"
             value={formatNumber(answers.length)}
             title="Answers"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800 gap-1"
+            containerGap="gap-1"
           />
           <Metric
             imgUrl="/assets/icons/eye.svg"
             alt="eye"
+            width={16}
+            height={16}
+            iconPosition="left"
             value={formatNumber(views)}
             title="Views"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800 gap-1"
+            containerGap="gap-1"
           />
         </div>
       </div>

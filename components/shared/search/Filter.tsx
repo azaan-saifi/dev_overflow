@@ -10,6 +10,7 @@ import {
 import { SelectGroup } from "@radix-ui/react-select";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formUrlQuery } from "@/lib/utils";
+import Image from "next/image";
 
 interface Props {
   filters: {
@@ -18,9 +19,17 @@ interface Props {
   }[];
   otherClasses?: string;
   containerClasses?: string;
+  placeholder?: string;
+  imgSrc?: string;
 }
 
-const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
+const Filter = ({
+  filters,
+  otherClasses,
+  containerClasses,
+  placeholder = "Select a Filter",
+  imgSrc,
+}: Props) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -48,8 +57,17 @@ const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
             className={`${otherClasses}
         body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5`}
           >
-            <div className="line-clamp-1 flex-1 text-left">
-              <SelectValue placeholder="Search a Filter" />
+            <div className="line-clamp-1 flex flex-1 gap-2 text-left">
+              {imgSrc && (
+                <Image
+                  src={imgSrc}
+                  alt="icon"
+                  height={20}
+                  width={20}
+                  className="invert-colors"
+                />
+              )}
+              <SelectValue placeholder={placeholder} />
             </div>
           </SelectTrigger>
           <SelectContent className="background-light900_dark200 light-border-2">
