@@ -8,8 +8,8 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-rapidapi-host": "meta-llama-3-8b.p.rapidapi.com",
-        "x-rapidapi-key": "e72fb4d2bbmshda09e5898511cd0p15b051jsn042d1ccefd6b",
+        "x-rapidapi-host": `${process.env.RAPID_API_HOST}`,
+        "x-rapidapi-key": `${process.env.META_API_KEY}`,
       },
       body: JSON.stringify({
         model: "meta-llama/Llama-3-8b-chat-hf",
