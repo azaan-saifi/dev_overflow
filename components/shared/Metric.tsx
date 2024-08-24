@@ -5,9 +5,9 @@ import React from "react";
 interface MetricProps {
   imgUrl: string;
   alt: string;
-  height: number;
-  width: number;
-  iconPosition: string;
+  height?: number;
+  width?: number;
+  iconPosition?: string;
   value: string | number;
   title: string;
   href?: string;
@@ -19,15 +19,15 @@ interface MetricProps {
 const Metric = ({
   imgUrl,
   alt,
-  height,
-  width,
-  iconPosition,
+  height = 16,
+  width = 16,
+  iconPosition = "left",
   value,
   title,
   href,
   textStyles,
   isAuthor,
-  containerGap,
+  containerGap = "gap-1",
 }: MetricProps) => {
   const metricContent = (
     <>
