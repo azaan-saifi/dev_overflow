@@ -16,7 +16,6 @@ import NoResult from "@/components/shared/NoResult";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
-  if (!clerkId) return null;
   const userInfo = await getUserInfo({ userId: params.id });
 
   return (

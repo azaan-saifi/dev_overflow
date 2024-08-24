@@ -352,12 +352,3 @@ export async function getUserQuestions(params: GetUserStatsParams) {
     throw error;
   }
 }
-
-// export async function getUserInfo(params:GetUserByIdParams) {
-//   try {
-//     connectToDatabase()
-//   } catch (error) {
-//     console.log(error)
-//     throw error;
-//   }
-// }

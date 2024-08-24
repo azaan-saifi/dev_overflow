@@ -115,7 +115,6 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       userId: userId ? JSON.parse(userId) : undefined,
     });
-    console.log("View counted succesfully");
   }, [itemId, userId, path, router]);
 
   return (

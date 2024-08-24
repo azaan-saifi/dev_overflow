@@ -21,6 +21,7 @@ interface Props {
   containerClasses?: string;
   placeholder?: string;
   imgSrc?: string;
+  filterType?: string;
 }
 
 const Filter = ({
@@ -29,22 +30,21 @@ const Filter = ({
   containerClasses,
   placeholder = "Select a Filter",
   imgSrc,
+  filterType = "filter",
 }: Props) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const paramFilter = searchParams.get("filter");
+  const paramFilter = searchParams.get(filterType);
 
   const handleUpdateParams = (value: string) => {
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
-      key: "filter",
+      key: filterType,
       value,
     });
     router.push(newUrl, { scroll: false });
   };
-
-  console.log(paramFilter);
 
   return (
     <>
